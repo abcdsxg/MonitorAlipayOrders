@@ -8,6 +8,9 @@ The project based [puppeteer](<https://github.com/GoogleChrome/puppeteer>), and 
 
 ### Edit config
 
-- edit the username and password of `config/config.js`, support both QR code and username/password login
+- edit the username and password of `config/config.js`
 - run `node alipay.js`
 
+### Demo
+
+![demo](demo.gif)
