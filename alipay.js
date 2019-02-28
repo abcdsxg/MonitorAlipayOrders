@@ -42,7 +42,7 @@ async function getAlipayOrders() {
 async function alipayQrLogin(page) {
     var data = {}
 
-    await page.goto("https://auth.alipay.com/login/index.htm");
+    await gotoUrl(page, "https://auth.alipay.com/login/index.htm");
 
     await page.waitFor(".barcode")
 
@@ -87,7 +87,7 @@ async function alipayQrLogin(page) {
 async function alipayPwdLogin(page, config) {
     var data = {}
 
-    await page.goto("https://auth.alipay.com/login/index.htm");
+    await gotoUrl(page, "https://auth.alipay.com/login/index.htm");
 
     await page.waitFor("#J-loginMethod-tabs")
 
@@ -160,7 +160,7 @@ async function alipayPwdLogin(page, config) {
 
 async function watchOrder(page, orders) {
     var url = "https://consumeprod.alipay.com/record/advanced.htm"
-    await page.goto(url);
+    await gotoUrl(page, url);
 
     await page.waitFor("#globalContainer")
 
@@ -246,8 +246,17 @@ async function watchOrder(page, orders) {
 async function refreshAlipayHome(page) {
     for (; ;) {
         await delay(30 * 1000)
-        await page.goto("https://my.alipay.com/portal/i.htm?referer=https%3A%2F%2Fauth.alipay.com%2Flogin%2Findex.htm")
+        await gotoUrl(page, "https://my.alipay.com/portal/i.htm?referer=https%3A%2F%2Fauth.alipay.com%2Flogin%2Findex.htm")
     }
+}
+
+async function gotoUrl(page, url) {
+    await page.evaluateOnNewDocument(() => {
+        Object.defineProperty(navigator, "webdriver", {
+            get: () => false
+        });
+    });
+    await page.goto(url)
 }
 
 function delay(timeout) {
